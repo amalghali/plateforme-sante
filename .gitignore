@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+# NE JAMAIS versionner de données patients brutes
+data/
+*.csv
+venv/
