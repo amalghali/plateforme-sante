@@ -1,6 +1,4 @@
-"""Nouvelle version de app.py : accueil organisé en sections, avec un tableau aligné (Dataset, Problème, Responsable, Statut).
-Fichier de test : le copier à la racine du projet à côté de app.py. Il est lancé par apercu_institutionnel.py.
-Quand le résultat vous convient, il remplacera app.py."""
+"""Plateforme d'aide à la décision en santé : accueil organisé en sections (tableau aligné) et navigation par module."""
 import html
 
 import streamlit as st
@@ -13,12 +11,11 @@ st.set_page_config(page_title="Plateforme d'aide à la décision en santé", pag
 apply_theme()
 modules = discover()
 
-st.sidebar.title("🏥 Plateforme santé")
-labels = {"home": "🏠 Accueil"}
+st.sidebar.title("Plateforme santé")
+labels = {"home": "Accueil"}
 for t in TEAM:
     m = modules.get(t["id"])
-    labels[t["id"]] = (f"{m.META.get('icon', '🔹')} {m.META['title']}" if m is not None and not isinstance(m, Exception)
-                       else f"⏳ {t['dataset']}")
+    labels[t["id"]] = (m.META["title"] if m is not None and not isinstance(m, Exception) else t["dataset"])
 choice = st.sidebar.radio("Modules", list(labels), format_func=labels.get)
 st.sidebar.caption("Projet de validation ML · 4CCE12 · CRISP-DM")
 

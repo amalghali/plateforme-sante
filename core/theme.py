@@ -1,37 +1,14 @@
-"""Thème « tableau de bord clinique » en vert forêt. Injecté une seule fois depuis app.py.
-Ne pas toucher aux modules : le CSS restyle automatiquement les formulaires, boutons et cartes."""
-import html
+"""Thème « Institutionnel sobre » : menu sombre, champs vert clair, angles droits, tableau d'accueil, formulaires alignés.
+Injecté une seule fois depuis app.py. Les modules n'ont rien à faire : le CSS restyle leurs formulaires et boutons.
+Réglages faciles à changer : les constantes ci-dessous."""
 import streamlit as st
 
-ROOT = ":root{--forest:#0F3D2E;--green:#1F7A5A;--bg:#F3F8F5;--line:#C9DDD3}"
-
-CSS = """
-.stApp{background:var(--bg)}
-[data-testid="stSidebar"]{background:var(--forest)}
-[data-testid="stSidebar"] *{color:#E6F2EC !important}
-h1,h2,h3{color:var(--forest);font-weight:600}
-[data-testid="stForm"]{background:#fff;border:1px solid var(--line);border-radius:12px}
-[data-testid="stVerticalBlockBorderWrapper"]{border-color:var(--line);border-radius:12px}
-[data-baseweb="input"],[data-baseweb="select"]>div{background:#EAF2EE !important;border:0 !important;border-radius:8px !important}
-.stButton>button{background:var(--green);color:#fff;border:0;border-radius:20px;padding:.45rem 1.4rem}
-.stButton>button:hover{background:#17624A;color:#fff}
-.badge{display:inline-block;font-size:12px;padding:2px 10px;border-radius:12px;font-weight:500}
-.badge.ok{background:#DCFCE7;color:#166534}.badge.wip{background:#FEF3C7;color:#92400E}.badge.err{background:#FEE2E2;color:#991B1B}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;min-height:122px}
-.card b{color:var(--forest);font-size:16px}
-.card p{color:#475569;font-size:13px;margin:6px 0}
-"""
-
-STATUS = {"ok": "disponible", "wip": "en cours", "err": "erreur"}
-
-import streamlit as st
-
-CHAMP_BG = "#E3F1EA"
-CHAMP_BORD = "#A9CDB9"
-ACCENT = "#4CAF87"
-SIDEBAR = "#1C2B25"
-TEXTE_MENU = "#B9C7BF"
-LIGNE = "92px"
+CHAMP_BG = "#E3F1EA"      # fond des champs du formulaire (vert clair)
+CHAMP_BORD = "#A9CDB9"    # contour des champs
+ACCENT = "#4CAF87"        # barre verte du menu, focus des champs
+SIDEBAR = "#1C2B25"       # fond du menu de gauche
+TEXTE_MENU = "#B9C7BF"    # texte du menu
+LIGNE = "108px"           # hauteur d'une ligne de formulaire (étiquette jusqu'à 3 lignes + champ)
 
 S = 'section[data-testid="stSidebar"]'
 G = S + ' div[role="radiogroup"]'
@@ -59,7 +36,7 @@ h1,h2,h3,h4{color:#111827 !important;font-weight:600 !important;letter-spacing:-
 @G@ > *:first-child:first-child{padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.16)}
 @G@ > *:first-child:first-child p{font-family:'Source Serif 4',Georgia,serif !important;font-size:21px !important;font-weight:700 !important;letter-spacing:.01em;color:#FFFFFF !important}
 
-[data-testid="stWidgetLabel"] p{text-transform:uppercase;letter-spacing:.04em;font-size:11.5px !important;color:#4B5563 !important;font-weight:500}
+[data-testid="stWidgetLabel"] p{text-transform:uppercase;letter-spacing:.02em;font-size:11.5px !important;color:#4B5563 !important;font-weight:500}
 [data-baseweb="input"],[data-baseweb="base-input"],[data-baseweb="select"]>div{background:@CHAMP@ !important;border:1px solid @BORD@ !important;border-radius:2px !important}
 [data-baseweb="input"] input,[data-baseweb="base-input"] input{background:transparent !important}
 [data-testid="stNumberInput"] button{background:transparent !important}
@@ -95,24 +72,19 @@ h1,h2,h3,h4{color:#111827 !important;font-weight:600 !important;letter-spacing:-
 [data-testid="stMarkdownContainer"] table.mods tr:hover td{background:#F5F8F6}
 
 /* Formulaires : chaque ligne a la même hauteur dans toutes les colonnes, donc les champs restent alignés même si une étiquette est longue */
-[data-testid="stWidgetLabel"]{min-height:34px;align-items:flex-end !important}
+[data-testid="stWidgetLabel"]{min-height:56px;align-items:flex-end !important}
 @S@ [data-testid="stWidgetLabel"]{min-height:0}
 [data-testid="stHorizontalBlock"]{align-items:flex-start !important}
 [data-baseweb="input"],[data-baseweb="select"]>div{min-height:40px}
 [data-testid="stColumn"] [data-testid="stElementContainer"],[data-testid="column"] [data-testid="stElementContainer"]{min-height:@LIGNE@}
 [data-testid="stColumn"] [data-testid="stElementContainer"]:has([data-testid="stCheckbox"]),[data-testid="column"] [data-testid="stElementContainer"]:has([data-testid="stCheckbox"]){padding-top:40px}
-[data-testid="stColumn"] [data-testid="stElementContainer"]:has(h1,h2,h3,h4,h5,h6,p>strong:only-child),[data-testid="column"] [data-testid="stElementContainer"]:has(h1,h2,h3,h4,h5,h6,p>strong:only-child){min-height:60px}
+[data-testid="stColumn"] [data-testid="stElementContainer"]:has(h1,h2,h3,h4,h5,h6,p>strong:only-child),[data-testid="column"] [data-testid="stElementContainer"]:has(h1,h2,h3,h4,h5,h6,p>strong:only-child){min-height:86px}
 """
+
+for _token, _value in {"@S@": S, "@G@": G, "@R@": R, "@SIDEBAR@": SIDEBAR, "@MENU@": TEXTE_MENU,
+                       "@ACCENT@": ACCENT, "@LIGNE@": LIGNE, "@CHAMP@": CHAMP_BG, "@BORD@": CHAMP_BORD}.items():
+    CSS = CSS.replace(_token, _value)
+
+
 def apply_theme():
-    css = CSS
-    for token, value in {"@S@": S, "@G@": G, "@R@": R, "@SIDEBAR@": SIDEBAR, "@MENU@": TEXTE_MENU,
-                         "@ACCENT@": ACCENT, "@LIGNE@": LIGNE, "@CHAMP@": CHAMP_BG, "@BORD@": CHAMP_BORD}.items():
-        css = css.replace(token, value)
-    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-
-
-def card_html(team_entry: dict, kind: str) -> str:
-    """kind : 'ok' (disponible), 'wip' (en cours) ou 'err' (erreur)."""
-    return (f'<div class="card"><b>{html.escape(team_entry["dataset"])}</b>'
-            f'<p>{html.escape(team_entry["problem"])}</p><p>{html.escape(team_entry["owner"])}</p>'
-            f'<span class="badge {kind}">{STATUS[kind]}</span></div>')
+    st.markdown(f"<style>{CSS}</style>", unsafe_allow_html=True)
